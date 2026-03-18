@@ -4,16 +4,40 @@ const { validateAuditRequest } = require('../middleware/validation');
 
 const router = express.Router();
 
-// Get Lighthouse-only audit
-router.post('/audit', async (req, res) => {
-  const { url } = req.body || {};
-
-  if (!url || typeof url !== 'string') {
-    return res.status(400).json({
-      error: 'INVALID_INPUT',
-      message: 'Field "url" is required and must be a string.',
-    });
-  }
+/**
+ * @swagger
+ * /api/lighthouse/audit:
+ *   post:
+ *     summary: Run Lighthouse-only audit
+ *     tags: [Lighthouse]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuditRequest'
+ *     responses:
+ *       200:
+ *         description: Lighthouse audit completed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LighthouseAudit'
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.post('/audit', validateAuditRequest, async (req, res) => {
+  const { url } = req.body;
 
   try {
     const report = await lighthouseService.runLighthouseAudit(url);
@@ -28,16 +52,40 @@ router.post('/audit', async (req, res) => {
   }
 });
 
-// Generate HTML report
-router.post('/report', async (req, res) => {
-  const { url } = req.body || {};
-
-  if (!url || typeof url !== 'string') {
-    return res.status(400).json({
-      error: 'INVALID_INPUT',
-      message: 'Field "url" is required and must be a string.',
-    });
-  }
+/**
+ * @swagger
+ * /api/lighthouse/report:
+ *   post:
+ *     summary: Generate HTML Lighthouse report
+ *     tags: [Lighthouse]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/AuditRequest'
+ *     responses:
+ *       200:
+ *         description: HTML report generated successfully
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.post('/report', validateAuditRequest, async (req, res) => {
+  const { url } = req.body;
 
   try {
     const report = await lighthouseService.runLighthouseAudit(url);
@@ -49,4 +97,9 @@ router.post('/report', async (req, res) => {
     console.error('Lighthouse report generation error:', err);
     res.status(500).json({
       error: 'REPORT_GENERATION_FAILED',
-      message: 'Failed to ge
+      message: 'Failed to generate Lighthouse report.',
+    });
+  }
+});
+
+module.exports = router;

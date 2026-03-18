@@ -1,8 +1,18 @@
-## GIGW UX Audit Backend (Phase 1)
+# GIGW UX Audit Backend
 
-Simple Node.js backend that accepts a URL, loads the page with Playwright, runs **23+ auto-checkable GIGW/WCAG/UX4G rules**, and returns a JSON report.
+Backend service for GIGW-based UX audit of websites using Lighthouse and custom accessibility rules.
 
-### Rules included (auto-checkable core)
+## Features
+
+- **Lighthouse Integration**: Performance, accessibility, best practices, and SEO audits
+- **Custom GIGW Rules**: Government of India website guidelines compliance (23+ rules)
+- **Swagger Documentation**: Complete API documentation with interactive testing
+- **Input Validation**: Robust request validation using Joi
+- **Security**: Rate limiting, CORS, and security headers
+- **Logging**: Structured logging with Winston
+- **Error Handling**: Centralized error handling middleware
+
+## Rules included (auto-checkable core)
 
 | Category            | Rule ID                         | Description                                              |
 | ------------------- | ------------------------------- | -------------------------------------------------------- |
@@ -30,9 +40,7 @@ Simple Node.js backend that accepts a URL, loads the page with Playwright, runs 
 | Navigation & IA     | UX4G_NAV_SEARCH_001             | Search box is available (if needed)                      |
 | Navigation & IA     | UX4G_NAV_BREADCRUMBS_001        | Breadcrumb navigation is available (where applicable)    |
 
-### 1. Install dependencies
-
-From the `backend` folder:
+## Installation
 
 ```bash
 npm install
@@ -44,25 +52,56 @@ Install Playwright browsers (one-time):
 npx playwright install
 ```
 
-### 2. Run the server
+## Environment Setup
 
+Copy the environment example file and configure:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` file with your settings:
+
+```env
+PORT=4000
+NODE_ENV=development
+API_BASE_URL=http://localhost:4000
+LOG_LEVEL=info
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+```
+
+## Running the Application
+
+Development mode:
+```bash
+npm run dev
+```
+
+Production mode:
 ```bash
 npm start
 ```
 
 The server will start on port `4000` by default.
 
-Health check:
+## API Documentation
 
-- `GET http://localhost:4000/health`
+Once the server is running, visit:
+- **Swagger UI**: http://localhost:4000/api-docs
+- **Health Check**: http://localhost:4000/health
 
-### 3. Run an audit
+## API Endpoints
 
-Endpoint:
+### Health Check
+- `GET /health` - Service health status
 
-- `POST http://localhost:4000/api/audit`
+### Audit Endpoints
+- `POST /api/audit` - Run complete UX audit (GIGW rules + Lighthouse)
+- `POST /api/lighthouse/audit` - Run Lighthouse-only audit
+- `POST /api/lighthouse/report` - Generate HTML Lighthouse report
 
-Body (JSON):
+### Request Format
 
 ```json
 {
@@ -70,7 +109,7 @@ Body (JSON):
 }
 ```
 
-Sample response shape (simplified):
+### Complete Audit Response Format
 
 ```json
 {
@@ -78,11 +117,11 @@ Sample response shape (simplified):
   "title": "Example",
   "fetchedAt": "2026-03-01T00:00:00.000Z",
   "summary": {
-    "totalRules": 3,
-    "passed": 2,
-    "failed": 1,
+    "totalRules": 23,
+    "passed": 18,
+    "failed": 5,
     "needsReview": 0,
-    "score": 67
+    "score": 78
   },
   "findings": [
     {
@@ -105,13 +144,95 @@ Sample response shape (simplified):
         "Provide meaningful alt text for all informative images."
       ]
     }
-  ]
+  ],
+  "lighthouse": {
+    "url": "https://example.com",
+    "timestamp": "2026-03-01T00:00:00.000Z",
+    "scores": {
+      "overall": 85,
+      "performance": 90,
+      "accessibility": 80,
+      "bestPractices": 85,
+      "seo": 85
+    },
+    "metrics": {
+      "firstContentfulPaint": 1200,
+      "largestContentfulPaint": 2400,
+      "cumulativeLayoutShift": 0.1,
+      "totalBlockingTime": 150,
+      "speedIndex": 1800
+    },
+    "audits": { ... },
+    "opportunities": [ ... ]
+  }
 }
 ```
 
-You can build any frontend (React, plain HTML, etc.) that:
+## Project Structure
 
-- Takes a URL input
-- Calls this `/api/audit` endpoint
-- Displays `summary` and `findings` to the user
+```
+src/
+├── config/
+│   ├── logger.js          # Winston logger configuration
+│   └── swagger.js         # Swagger/OpenAPI configuration
+├── middleware/
+│   ├── errorHandler.js    # Centralized error handling
+│   ├── security.js        # Security middleware (helmet, rate limiting)
+│   └── validation.js      # Request validation with Joi
+├── routes/
+│   └── lighthouse.js      # Lighthouse-specific routes
+├── services/
+│   ├── auditRunner.js     # Main audit orchestration
+│   ├── lighthouseService.js # Lighthouse integration
+│   └── pageSnapshot.js    # Page snapshot service
+├── rules/                 # Custom GIGW accessibility rules
+└── server.js              # Main application entry point
+```
+
+## Security Features
+
+- **Rate Limiting**: Configurable request rate limits
+- **CORS**: Cross-origin resource sharing configuration
+- **Security Headers**: Helmet.js for security headers
+- **Input Validation**: Joi-based request validation
+- **Error Sanitization**: Secure error responses in production
+
+## Logging
+
+- **Development**: Console output with colors
+- **Production**: File-based logging (logs/combined.log, logs/error.log)
+- **Structured**: JSON format for log analysis
+
+## Development
+
+### Adding New Rules
+
+Create new rule files in `src/rules/` following the existing pattern:
+
+```javascript
+const rule = {
+  name: 'customRule',
+  description: 'Description of the rule',
+  check: ($) => {
+    // Your rule logic here
+    return {
+      passed: true,
+      message: 'Rule passed'
+    };
+  }
+};
+
+module.exports = rule;
+```
+
+### Adding New Endpoints
+
+1. Create route in appropriate routes file
+2. Add Swagger documentation
+3. Add validation if needed
+4. Update API documentation
+
+## License
+
+MIT
 
