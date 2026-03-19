@@ -1,7 +1,7 @@
 # Dockerfile for GIGW UX Audit Backend
 # Includes Chrome for Lighthouse audits
 
-FROM node:18-slim
+FROM node:20-slim
 
 # Install Chrome dependencies
 RUN apt-get update && apt-get install -y \
