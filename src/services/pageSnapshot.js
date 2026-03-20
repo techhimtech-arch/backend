@@ -16,8 +16,8 @@ async function getPageSnapshot(url) {
 
   try {
     await page.goto(url, {
-      waitUntil: 'networkidle',
-      timeout: 45000,
+      waitUntil: 'domcontentloaded', // Changed from networkidle to avoid timeouts on sites with persistent network activity
+      timeout: 60000, // Increased timeout just to be safe for slower sites
     });
 
     const [title, html] = await Promise.all([page.title(), page.content()]);
