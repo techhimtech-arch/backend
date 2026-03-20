@@ -66,6 +66,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install Playwright browsers
+RUN npx playwright install chromium --with-deps
+
 # Copy app source
 COPY src/ ./src/
 COPY .env.example ./.env.example
