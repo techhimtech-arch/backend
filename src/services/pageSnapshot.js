@@ -10,9 +10,15 @@ const { chromium } = require('playwright');
 async function getPageSnapshot(url) {
   const browser = await chromium.launch({
     headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
   });
 
-  const page = await browser.newPage();
+  const context = await browser.newContext({
+    ignoreHTTPSErrors: true,
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  });
+
+  const page = await context.newPage();
 
   try {
     await page.goto(url, {
