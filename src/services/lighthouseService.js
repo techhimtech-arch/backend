@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const lighthouse = require('lighthouse');
+const lighthouse = require('lighthouse').default;
 const chromeLauncher = require('chrome-launcher');
 
 class LighthouseService {
