@@ -6,7 +6,7 @@ const { URL } = require('url');
 /**
  * Capture screenshots using Puppeteer.
  * @param {string[]} urls List of URLs to screenshot
- * @returns {Promise<Array<{url: string, path: string}>>} Screenshot results
+ * @returns {Promise<Array<{url: string, path: string, fullUrl: string}>>} Screenshot results
  */
 async function captureScreenshots(urls) {
   const screenshotsDir = path.join(process.cwd(), 'public', 'screenshots');
@@ -38,7 +38,8 @@ async function captureScreenshots(urls) {
         
         results.push({
           url: link,
-          path: `/screenshots/${filename}`
+          path: `/screenshots/${filename}`,
+          fullUrl: `http://localhost:${process.env.PORT || 4000}/screenshots/${filename}`
         });
       } catch (err) {
         console.warn(`Failed to capture screenshot for ${link}:`, err.message);
