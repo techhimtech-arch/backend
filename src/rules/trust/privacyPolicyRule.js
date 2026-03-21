@@ -2,7 +2,7 @@
  * UX4G / GIGW - Privacy Policy link presence
  * Checks whether the page exposes a Privacy Policy link.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const privacyPolicyRule = {
   id: 'UX4G_TRUST_PRIVACY_POLICY_001',

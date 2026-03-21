@@ -2,7 +2,7 @@
  * WCAG 2.4.4 - Link Purpose (In Context)
  * The purpose of each link can be determined from the link text alone or with context.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const GENERIC_LINK_TEXTS = [
   'click here',

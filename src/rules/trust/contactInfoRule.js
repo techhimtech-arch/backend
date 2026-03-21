@@ -2,7 +2,7 @@
  * UX4G / GIGW - Contact / Help / FAQ presence
  * Checks for visible entry points to contact information or support.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const contactInfoRule = {
   id: 'UX4G_TRUST_CONTACT_001',

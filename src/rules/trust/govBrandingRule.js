@@ -2,7 +2,7 @@
  * UX4G / GIGW - Government branding and emblem
  * Heuristically checks for presence of government / ministry branding near the top of the page.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const govBrandingRule = {
   id: 'UX4G_TRUST_GOV_BRANDING_001',

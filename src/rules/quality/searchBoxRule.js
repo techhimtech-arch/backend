@@ -2,7 +2,7 @@
  * UX4G - Search box presence for large applications
  * Checks for search input or search form controls.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const searchBoxRule = {
   id: 'UX4G_NAV_SEARCH_001',

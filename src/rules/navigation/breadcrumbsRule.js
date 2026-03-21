@@ -2,7 +2,7 @@
  * UX4G - Breadcrumb navigation
  * Checks for breadcrumb navigation to show user location in the site structure.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const breadcrumbsRule = {
   id: 'UX4G_NAV_BREADCRUMBS_001',

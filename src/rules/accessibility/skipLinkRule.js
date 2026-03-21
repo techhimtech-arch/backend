@@ -2,7 +2,7 @@
  * WCAG 2.4.1 - Bypass Blocks
  * A mechanism is available to bypass blocks of content that are repeated on multiple web pages.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const skipLinkRule = {
   id: 'GIGW_A11Y_SKIP_LINK_001',

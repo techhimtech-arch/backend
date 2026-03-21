@@ -1,4 +1,4 @@
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 /**
  * Basic rule:

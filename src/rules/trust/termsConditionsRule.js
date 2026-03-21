@@ -2,7 +2,7 @@
  * UX4G / GIGW - Terms & Conditions presence
  * Checks whether the page exposes a Terms & Conditions link.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const termsConditionsRule = {
   id: 'UX4G_TRUST_TERMS_001',

@@ -2,7 +2,7 @@
  * UX4G - Feedback / grievance mechanism
  * Checks that there is at least one entry point for feedback or grievance submission.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const feedbackLinkRule = {
   id: 'UX4G_TRUST_FEEDBACK_001',

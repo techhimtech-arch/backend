@@ -2,7 +2,7 @@
  * WCAG 4.1.2 - Name, Role, Value
  * Buttons and icon buttons must have an accessible name.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const buttonAccessibleNameRule = {
   id: 'GIGW_A11Y_BUTTON_NAME_001',

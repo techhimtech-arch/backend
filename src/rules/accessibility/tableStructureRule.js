@@ -2,7 +2,7 @@
  * GIGW Quality 19 - Data tables with necessary tags/markup
  * WCAG 1.3.1 - Info and relationships
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const tableStructureRule = {
   id: 'GIGW_QUALITY_TABLE_001',

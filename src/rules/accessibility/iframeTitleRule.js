@@ -2,7 +2,7 @@
  * WCAG 4.1.2 - Name, Role, Value (implied for iframes)
  * Iframes must have a title so screen readers can describe their purpose.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const iframeTitleRule = {
   id: 'GIGW_A11Y_IFRAME_TITLE_001',

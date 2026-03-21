@@ -2,7 +2,7 @@
  * UX4G / GIGW - Ownership / About section
  * Checks that the site exposes an About / About Us / About Department entry.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const aboutOwnershipRule = {
   id: 'UX4G_TRUST_ABOUT_001',

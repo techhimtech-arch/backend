@@ -2,7 +2,7 @@
  * WCAG 1.4.2 - Audio Control
  * If audio plays automatically for more than 3 seconds, a mechanism to pause/stop must be available.
  */
-const { buildSelectorPath } = require('./utils');
+const { buildSelectorPath } = require('../utils');
 
 const autoplayMediaRule = {
   id: 'GIGW_A11Y_AUTOPLAY_001',
